@@ -1,0 +1,39 @@
+<div class="card max-w-lg mx-auto mt-30">
+  <div class="card-title justify-center text-3xl text-primary">Sign In</div>
+  <div class="card-body">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label for="username" class="block text-sm font-medium text-gray-700"
+          >Username</label
+        >
+        <input
+          id="username"
+          formControlName="username"
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          [readonly]="isLoading()"
+        />
+      </div>
+      <div class="flex gap-3 mb-4">
+        <div class="flex-1">
+          <label for="password" class="block text-sm font-medium text-gray-700"
+            >Password</label
+          >
+          <input
+            id="password"
+            formControlName="password"
+            type="password"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            [readonly]="isLoading()"
+          />
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn mt-4 w-full btn-primary"
+        [disabled]="isLoading()"
+      >
+        {{ isLoading() ? "Logging in..." : "Login" }}
+      </button>
+    </form>
+  </div>
+</div>
