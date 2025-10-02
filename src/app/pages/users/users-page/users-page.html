@@ -1,0 +1,79 @@
+<section id="users-page" class="min-h-screen p-6">
+  <div class="text-center mb-10">
+    <h2 class="text-4xl font-bold text-white">Manage Users</h2>
+    <p class="mt-2 text-gray-300 text-sm">
+      View, add, edit, or remove users from the system.
+    </p>
+  </div>
+
+  <!-- Search Bar -->
+  @if(!isLoading() && !error() && users().length > 0) {
+  <div class="mb-4 flex items-center gap-2">
+    <div class="relative w-full max-w-xs">
+      <input
+        type="text"
+        placeholder="Search users..."
+        class="input input-bordered w-full pr-10"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="searchTerm.set($event); currentPage.set(1)"
+      />
+
+      <!-- Clear Icon -->
+      @if(searchTerm().length > 0) {
+      <button
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        (click)="clearSearch()"
+        aria-label="Clear search"
+      >
+        ✕
+      </button>
+      }
+    </div>
+
+    <button class="btn btn-primary" (click)="addUser()">Add User</button>
+  </div>
+  }
+
+  <!-- Users Table -->
+  <app-users-list-component
+    [users]="filteredUsers()"
+    [isLoading]="isLoading()"
+    [error]="error()"
+    (editUser)="editUser($event)"
+    (deleteUser)="deleteUser($event)"
+  />
+
+  <!-- Pagination -->
+  @if(!isLoading() && !error() && users().length > 0) {
+  <div class="mt-4 flex justify-end">
+    <div class="join">
+      <select
+        class="join-item select select-bordered"
+        [(ngModel)]="itemsPerPage"
+        (ngModelChange)="itemsPerPage.set($event); currentPage.set(1)"
+      >
+        <option [value]="5">5 per page</option>
+        <option [value]="10">10 per page</option>
+        <option [value]="20">20 per page</option>
+        <option [value]="50">50 per page</option>
+        <option [value]="100">100 per page</option>
+      </select>
+      <button
+        class="join-item btn"
+        (click)="prevPage()"
+        [disabled]="currentPage() === 1"
+      >
+        «
+      </button>
+      <button class="join-item btn">Page {{ currentPage() }}</button>
+      <button
+        class="join-item btn"
+        (click)="nextPage()"
+        [disabled]="paginatedUsers().length < itemsPerPage()"
+      >
+        »
+      </button>
+    </div>
+  </div>
+  }
+</section>

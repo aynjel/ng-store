@@ -1,0 +1,18 @@
+<section id="products-page" class="min-h-screen p-6">
+  <div class="text-center mb-10">
+    <h2 class="text-4xl font-bold text-white">Explore Our Products</h2>
+    <p class="mt-2 text-gray-300 text-sm">
+      Find the perfect item from our curated catalog
+    </p>
+  </div>
+
+  @if(!error() && !isLoading() && products().length > 0) {
+  <app-products-filter-component [(filters)]="filters" />
+  }
+
+  <app-products-list-component
+    [products]="filteredProducts()"
+    [isLoading]="isLoading()"
+    [error]="error()"
+  />
+</section>

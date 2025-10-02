@@ -1,0 +1,28 @@
+<!-- Product Grid -->
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+>
+  @for (product of products(); track product.id) {
+  <app-products-item-component [product]="product" />
+  } @empty { @if(isLoading()) {
+  <div class="skeleton h-15 col-span-full"></div>
+  <div class="skeleton h-80"></div>
+  <div class="skeleton h-80"></div>
+  <div class="skeleton h-80"></div>
+  <div class="skeleton h-80"></div>
+  <div class="skeleton h-80"></div>
+  <div class="skeleton h-80"></div>
+  } @else if(error()) {
+  <div class="col-span-full">
+    <div class="alert alert-error">
+      <span>{{ error() }}</span>
+    </div>
+  </div>
+  } @else {
+  <div class="col-span-full">
+    <div class="alert alert-info">
+      <span>No products found.</span>
+    </div>
+  </div>
+  } }
+</div>

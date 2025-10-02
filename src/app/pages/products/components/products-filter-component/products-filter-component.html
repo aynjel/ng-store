@@ -1,0 +1,67 @@
+<!-- Filters -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+  <!-- Search -->
+  <div class="form-control">
+    <label class="label text-sm font-semibold text-gray-700">Search</label>
+    <input
+      type="text"
+      [(ngModel)]="filters().search"
+      (ngModelChange)="filterOnChange('search', $event)"
+      placeholder="Search products..."
+      class="input input-bordered bg-white text-indigo-600 placeholder-indigo-400 border-indigo-300 shadow-sm"
+    />
+  </div>
+
+  <!-- Category -->
+  <div class="form-control">
+    <label class="label text-sm font-semibold text-gray-700">Category</label>
+    <select
+      [(ngModel)]="filters().category"
+      (ngModelChange)="filterOnChange('category', $event)"
+      class="select select-bordered bg-white text-indigo-600 placeholder-indigo-400 border-indigo-300 shadow-sm"
+    >
+      <option value="">All</option>
+      <option value="electronics">Electronics</option>
+      <option value="fashion">Fashion</option>
+      <option value="home">Home & Living</option>
+      <option value="sports">Sports & Outdoors</option>
+    </select>
+  </div>
+
+  <!-- Price Range -->
+  <div class="form-control">
+    <label class="label text-sm font-semibold text-gray-700">Price Range</label>
+    <div class="flex gap-2">
+      <input
+        type="number"
+        [(ngModel)]="filters().minPrice"
+        (ngModelChange)="filterOnChange('minPrice', $event)"
+        placeholder="Min"
+        class="input input-bordered w-1/2 bg-white text-indigo-600 placeholder-indigo-400 border-indigo-300 shadow-sm"
+      />
+      <input
+        type="number"
+        [(ngModel)]="filters().maxPrice"
+        (ngModelChange)="filterOnChange('maxPrice', $event)"
+        placeholder="Max"
+        class="input input-bordered w-1/2 bg-white text-indigo-600 placeholder-indigo-400 border-indigo-300 shadow-sm"
+      />
+    </div>
+  </div>
+
+  <!-- Sort -->
+  <div class="form-control">
+    <label class="label text-sm font-semibold text-gray-700">Sort By</label>
+    <select
+      [(ngModel)]="filters().sort"
+      (ngModelChange)="filterOnChange('sort', $event)"
+      class="select select-bordered bg-white text-indigo-600 placeholder-indigo-400 border-indigo-300 shadow-sm"
+    >
+      <option value="default">Default</option>
+      <option value="priceAsc">Price: Low to High</option>
+      <option value="priceDesc">Price: High to Low</option>
+      <option value="nameAsc">Name: A-Z</option>
+      <option value="nameDesc">Name: Z-A</option>
+    </select>
+  </div>
+</div>

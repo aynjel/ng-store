@@ -1,0 +1,27 @@
+<div class="card bg-gray-100 shadow-md">
+  <figure>
+    <img
+      [src]="product.image"
+      [alt]="product.title"
+      class="h-48 w-full object-cover"
+    />
+  </figure>
+  <div class="card-body">
+    <h2
+      class="card-title text-indigo-600 cursor-pointer"
+      [routerLink]="['/products', product.id]"
+    >
+      {{ product.title }}
+    </h2>
+
+    <p class="text-sm text-gray-600">
+      {{ product.description | slice : 0 : 70 }}...
+    </p>
+    <div class="flex justify-between items-center mt-4">
+      <span class="text-lg font-bold text-indigo-500">{{
+        product.price | currency
+      }}</span>
+      <button class="btn btn-sm btn-primary">Add to Cart</button>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { debounceTime, finalize } from 'rxjs';
 import { LoginRequest } from '../../../models/users.model';
 import { AuthService } from '../../../services/auth-service';
@@ -13,7 +13,7 @@ import { ToastService } from '../../../services/toast-service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
 })
 export class Login {

@@ -8,15 +8,15 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { finalize, first } from 'rxjs';
-import { TUser } from '../../../models/users.model';
+import { CreateUserRequest } from '../../../models/users.model';
 import { ToastService } from '../../../services/toast-service';
 import { UserService } from '../../../services/user-service';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
 })
 export class Register implements OnInit {
@@ -28,6 +28,7 @@ export class Register implements OnInit {
   protected isLoading = signal(false);
 
   public registerForm = this.formBuilder.group({
+    name: new FormControl('', [Validators.required]),
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -58,25 +59,18 @@ export class Register implements OnInit {
   onSubmit(): void {
     if (!this.registerForm.valid) return;
 
-    if (
-      !this.isPasswordMatch(
-        this.registerForm.value.password!,
-        this.registerForm.value.confirmPassword!
-      )
-    ) {
-      return;
-    }
-
-    const payload: TUser = {
-      id: parseInt(crypto.randomUUID().toString()),
+    const payload: CreateUserRequest = {
       email: this.registerForm.value.email!,
       username: this.registerForm.value.username!,
       password: this.registerForm.value.password!,
+      name: this.registerForm.value.name!,
+      active: true,
+      role: 'Customer',
     };
 
     this.isLoading.set(true);
     this.userService
-      .create(payload)
+      .create<CreateUserRequest>(payload)
       .pipe(
         first(),
         finalize(() => this.isLoading.set(false))
@@ -101,12 +95,5 @@ export class Register implements OnInit {
       const confirmPassword = formGroup.get('confirmPassword')?.value;
       return password === confirmPassword ? null : { passwordsMismatch: true };
     };
-  }
-
-  private isPasswordMatch(
-    password: string,
-    confirmedPassword: string
-  ): boolean {
-    return password === confirmedPassword;
   }
 }

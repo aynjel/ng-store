@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -8,12 +9,17 @@ import { Router } from '@angular/router';
   templateUrl: './not-found.html',
 })
 export class NotFound {
+  private location = inject(Location);
   searchForm: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.searchForm = this.fb.group({
       query: [''],
     });
+  }
+
+  onClickBack() {
+    this.location.back();
   }
 
   onSearch() {

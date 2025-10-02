@@ -1,0 +1,119 @@
+<div class="overflow-x-auto min-h-[200px]">
+  <table class="table w-full">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(user of users(); track user; let i = $index) {
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span class="badge badge-outline badge-info">{{ user.role }}</span>
+        </td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': user.active,
+              'badge-error': !user.active
+            }"
+          >
+            {{ user.active ? "Active" : "Inactive" }}
+          </span>
+        </td>
+        <td>
+          <!-- dropdown action buttons -->
+          <div class="dropdown dropdown-end">
+            <button
+              tabindex="0"
+              class="btn btn-sm btn-circle btn-ghost"
+              aria-label="Actions"
+            >
+              ⋮
+            </button>
+            <ul
+              tabindex="0"
+              class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32"
+            >
+              <li>
+                <button (click)="editUser.emit(user)" class="justify-between">
+                  Edit
+                </button>
+              </li>
+              <li>
+                <button
+                  (click)="deleteUser.emit(user)"
+                  class="justify-between text-error"
+                >
+                  Delete
+                </button>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      } @empty { @if(isLoading()){
+      <tr>
+        <td colspan="6">
+          <div class="skeleton h-10 w-full"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <div class="skeleton h-10 w-full"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <div class="skeleton h-10 w-full"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <div class="skeleton h-10 w-full"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <div class="skeleton h-10 w-full"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <div class="skeleton h-10 w-full"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <div class="skeleton h-10 w-full"></div>
+        </td>
+      </tr>
+      } @else if(error()) {
+      <tr>
+        <td colspan="6">
+          <div class="alert alert-error">
+            <span>{{ error() }}</span>
+          </div>
+        </td>
+      </tr>
+      } @else {
+      <tr>
+        <td colspan="6">
+          <div class="alert alert-info">
+            <span>No users found.</span>
+          </div>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+</div>

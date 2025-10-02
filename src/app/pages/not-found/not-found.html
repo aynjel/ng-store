@@ -41,6 +41,9 @@
       </button>
     </form>
 
-    <a routerLink="/" class="btn btn-primary">Go Back Home</a>
+    <div class="flex gap-3">
+      <a (click)="onClickBack()" class="btn btn-primary btn-outline">Back</a>
+      <a routerLink="/" class="btn btn-primary">Go Back Home</a>
+    </div>
   </div>
 </section>

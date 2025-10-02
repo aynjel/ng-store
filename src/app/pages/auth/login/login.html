@@ -35,5 +35,14 @@
         {{ isLoading() ? "Logging in..." : "Login" }}
       </button>
     </form>
+
+    <div class="mt-4 text-center">
+      <span class="text-sm text-gray-600">Don't have an account?</span>
+      <a
+        routerLink="/auth/register"
+        class="text-sm text-blue-500 ml-1 hover:underline"
+        >Register</a
+      >
+    </div>
   </div>
 </div>

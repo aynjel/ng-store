@@ -44,6 +44,14 @@
             </li>
             <li>
               <a
+                routerLink="/users"
+                class="hover:bg-indigo-500 hover:text-white"
+                routerLinkActive="bg-indigo-500 text-white"
+                >Users</a
+              >
+            </li>
+            <li>
+              <a
                 routerLink="/about"
                 class="hover:bg-indigo-500 hover:text-white"
                 routerLinkActive="bg-indigo-500 text-white"
@@ -68,32 +76,40 @@
         <ul class="menu menu-horizontal px-1 space-x-2">
           <li>
             <a
-              routerLink="/home"
               class="hover:bg-white hover:text-indigo-600 rounded-md px-3 py-1"
+              routerLink="/home"
               routerLinkActive="bg-white text-indigo-500"
               >Home</a
             >
           </li>
           <li>
             <a
-              routerLink="/products"
               class="hover:bg-white hover:text-indigo-600 rounded-md px-3 py-1"
+              routerLink="/products"
               routerLinkActive="bg-white text-indigo-500"
               >Products</a
             >
           </li>
           <li>
             <a
-              routerLink="/about"
               class="hover:bg-white hover:text-indigo-600 rounded-md px-3 py-1"
+              routerLink="/users"
+              routerLinkActive="bg-white text-indigo-500"
+              >Users</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:bg-white hover:text-indigo-600 rounded-md px-3 py-1"
+              routerLink="/about"
               routerLinkActive="bg-white text-indigo-500"
               >About</a
             >
           </li>
           <li>
             <a
-              routerLink="/contact"
               class="hover:bg-white hover:text-indigo-600 rounded-md px-3 py-1"
+              routerLink="/contact"
               routerLinkActive="bg-white text-indigo-500"
               >Contact</a
             >
@@ -102,27 +118,33 @@
       </div>
 
       <!-- End: CTA & Icons -->
-      <div class="navbar-end space-x-2">
+      <div class="navbar-end space-x-4">
         @if(authService.isLoggedIn()){
         <!-- Cart Icon -->
-        <button
-          class="btn btn-sm btn-circle bg-white text-indigo-600 hover:bg-indigo-100"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-5"
+        <div class="indicator">
+          <span class="indicator-item badge badge-sm badge-error font-bold">{{
+            cartService.carts().length
+          }}</span>
+          <button
+            class="btn btn-sm btn-circle bg-white text-indigo-600 hover:bg-indigo-100"
+            routerLink="/carts"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+              />
+            </svg>
+          </button>
+        </div>
 
         <!-- User Icon with Dropdown -->
         <div class="dropdown dropdown-end">
@@ -149,17 +171,27 @@
             tabindex="0"
             class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white text-indigo-600 rounded-box w-40"
           >
-            <li><a class="hover:bg-indigo-500 hover:text-white">Profile</a></li>
+            <li>
+              <a class="hover:bg-indigo-500 hover:text-white"
+                >Profile ({{ authService.userData()?.username }})</a
+              >
+            </li>
             <li>
               <a class="hover:bg-indigo-500 hover:text-white">Settings</a>
             </li>
-            <li><a class="hover:bg-indigo-500 hover:text-white">Logout</a></li>
+            <li>
+              <a
+                class="hover:bg-indigo-500 hover:text-white"
+                (click)="onLogout()"
+                >Logout</a
+              >
+            </li>
           </ul>
         </div>
         }@else {
         <button
           class="btn btn-sm bg-white text-indigo-600 hover:bg-indigo-100 font-semibold"
-          routerLink="/auth/login"
+          (click)="onShopNow()"
         >
           Shop Now
         </button>

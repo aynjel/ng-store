@@ -1,9 +1,16 @@
 export interface TUser {
-  id: number;
+  id: string;
   username: string;
   email: string;
   password: string;
+  name: string;
+  active: boolean;
+  role: UserRole;
 }
+
+export type UserRole = 'Admin' | 'Customer';
+
+export type TUserReadonly = Omit<TUser, 'password'>;
 
 export interface LoginRequest {
   username: string;
@@ -13,3 +20,5 @@ export interface LoginRequest {
 export interface LoginResponse {
   token: string;
 }
+
+export type CreateUserRequest = Omit<TUser, 'id'>;

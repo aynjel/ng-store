@@ -1,7 +1,18 @@
-<div class="card max-w-lg mx-auto mt-10">
+<div class="card max-w-lg mx-auto mt-30">
   <div class="card-title justify-center text-3xl text-primary">Sign Up</div>
   <div class="card-body">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700"
+          >Name</label
+        >
+        <input
+          id="name"
+          formControlName="name"
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          [readonly]="isLoading()"
+        />
+      </div>
       <div class="mb-4">
         <label for="username" class="block text-sm font-medium text-gray-700"
           >Username</label
@@ -60,5 +71,12 @@
         {{ isLoading() ? "Registering..." : "Register" }}
       </button>
     </form>
+
+    <div class="mt-4 text-center">
+      <span class="text-sm text-gray-600"> Already have an account? </span>
+      <a routerLink="/auth/login" class="text-sm text-blue-500 hover:underline"
+        >Log in</a
+      >
+    </div>
   </div>
 </div>
