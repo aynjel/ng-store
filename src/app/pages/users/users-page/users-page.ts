@@ -41,8 +41,7 @@ export class UsersPage {
       (user) =>
         user.name.toLowerCase().includes(term) ||
         user.email.toLowerCase().includes(term) ||
-        user.role.toLowerCase().includes(term) ||
-        user.username.toLowerCase().includes(term)
+        user.role.toLowerCase().includes(term)
     );
   });
 

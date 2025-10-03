@@ -9,10 +9,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { finalize, first } from 'rxjs';
 import { CreateUserRequest } from '../../../models/users.model';
+import { AuthService } from '../../../services/auth-service';
 import { ToastService } from '../../../services/toast-service';
-import { UserService } from '../../../services/user-service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +19,7 @@ import { UserService } from '../../../services/user-service';
   templateUrl: './register.html',
 })
 export class Register implements OnInit {
-  private userService = inject(UserService);
+  private authService = inject(AuthService);
   private toastService = inject(ToastService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
@@ -29,11 +28,6 @@ export class Register implements OnInit {
 
   public registerForm = this.formBuilder.group({
     name: new FormControl('', [Validators.required]),
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20),
-    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
@@ -49,7 +43,7 @@ export class Register implements OnInit {
 
   ngOnInit(): void {
     this.formBuilder.group({
-      username: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -60,33 +54,29 @@ export class Register implements OnInit {
     if (!this.registerForm.valid) return;
 
     const payload: CreateUserRequest = {
-      email: this.registerForm.value.email!,
-      username: this.registerForm.value.username!,
-      password: this.registerForm.value.password!,
       name: this.registerForm.value.name!,
-      active: true,
+      email: this.registerForm.value.email!,
+      password: this.registerForm.value.password!,
       role: 'Customer',
     };
 
     this.isLoading.set(true);
-    this.userService
-      .create<CreateUserRequest>(payload)
-      .pipe(
-        first(),
-        finalize(() => this.isLoading.set(false))
-      )
-      .subscribe({
-        next: (response) => {
-          this.toastService.show('Registration successful!', 'success');
-          this.router.navigate(['/auth/login']);
-        },
-        error: (err) => {
-          this.toastService.show(
-            'Registration failed. Please try again.',
-            'error'
-          );
-        },
-      });
+    this.authService
+      .registerWithEmailAndPassword(payload)
+      .then((response) => {
+        this.toastService.show(
+          `Registration successful: ${response.user?.email}`,
+          'success'
+        );
+        this.router.navigate(['/auth/login']);
+      })
+      .catch((err) => {
+        this.toastService.show(
+          `Registration failed: ${err.error || err.message}`,
+          'error'
+        );
+      })
+      .finally(() => this.isLoading.set(false));
   }
 
   private passwordsMatchValidator(): ValidatorFn {

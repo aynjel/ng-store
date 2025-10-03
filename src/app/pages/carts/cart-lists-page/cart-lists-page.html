@@ -1,51 +1,8 @@
-<section id="carts-page">
-  <div class="p-4 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-4">Your Cart</h2>
-
-    <pre>
-      {{ this.cartService.carts() | json }}
-
-    </pre>
-
-    <!-- @if(cartService.carts().length){
-    <div class="space-y-4">
-      @for (cart of cartService.carts(); track cart.id) {
-      <div class="card card-side bg-base-100 shadow-md">
-        <figure class="w-24 h-24 overflow-hidden">
-          <img
-            [src]="cart.imageUrl"
-            alt="{{ cart.name }}"
-            class="object-cover w-full h-full"
-          />
-        </figure>
-        <div class="card-body">
-          <h3 class="card-title">{{ cart.name }}</h3>
-          <p class="text-sm text-gray-500">
-            ₱{{ cart.price }} x {{ cart.quantity }}
-          </p>
-          <div class="flex items-center gap-2">
-            <input
-              type="number"
-              min="1"
-              [value]="cart.quantity"
-              class="input input-sm w-16"
-            />
-            <button class="btn btn-sm btn-error">Remove</button>
-          </div>
-        </div>
-      </div>
-      }
-    </div>
-
-    <div class="mt-6 flex justify-between items-center">
-      <p class="text-lg font-semibold">Total: ₱{{ total() }}</p>
-      <button class="btn btn-primary">Checkout</button>
-    </div>
-    } @else {
-    <div class="text-center text-gray-500 mt-10">
-      <p>Your cart is empty.</p>
-      <a routerLink="/products" class="btn btn-outline mt-4">Browse Products</a>
-    </div>
-    } -->
+<section id="carts-page" class="min-h-screen p-6">
+  <div class="text-center mb-10">
+    <h2 class="text-4xl font-bold text-white">Carts Page</h2>
+    <p class="mt-2 text-gray-300 text-sm">
+      Manage your shopping cart items here
+    </p>
   </div>
 </section>

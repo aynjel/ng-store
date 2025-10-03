@@ -1,6 +1,5 @@
 export const environment = {
   production: true,
-  baseApiUrl: 'https://fakestoreapi.com/',
   firebaseConfig: {
     apiKey: 'AIzaSyAzpK4l3wrGl8CPomAPvVSP34Z_sFl3-dw',
     authDomain: 'ngstore-dev.firebaseapp.com',

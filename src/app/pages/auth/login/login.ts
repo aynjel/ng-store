@@ -6,8 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { debounceTime, finalize } from 'rxjs';
-import { LoginRequest } from '../../../models/users.model';
 import { AuthService } from '../../../services/auth-service';
 import { ToastService } from '../../../services/toast-service';
 
@@ -19,13 +17,14 @@ import { ToastService } from '../../../services/toast-service';
 export class Login {
   private formBuilder = inject(FormBuilder);
   private toastService = inject(ToastService);
-  protected authService = inject(AuthService);
   private router = inject(Router);
+
+  protected authService = inject(AuthService);
 
   protected isLoading = signal(false);
 
   protected loginForm = this.formBuilder.group({
-    username: new FormControl('', [
+    email: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(20),
@@ -40,25 +39,25 @@ export class Login {
   protected onSubmit(): void {
     if (!this.loginForm.valid || this.isLoading()) return;
 
-    const loginCredentials: LoginRequest = {
-      username: this.loginForm.value.username!,
-      password: this.loginForm.value.password!,
-    };
-
+    this.isLoading.set(true);
     this.authService
-      .login(loginCredentials)
-      .pipe(
-        debounceTime(3000),
-        finalize(() => this.isLoading.set(false))
+      .loginWithEmailAndPassword(
+        this.loginForm.value.email!,
+        this.loginForm.value.password!
       )
-      .subscribe({
-        next: (response) => {
-          this.toastService.show('Login successful', 'success');
-          this.router.navigate(['/home']);
-        },
-        error: (err) => {
-          this.toastService.show('Login failed: ' + err.error, 'error');
-        },
-      });
+      .then((response) => {
+        this.toastService.show(
+          `Login successful ${response.user?.email}`,
+          'success'
+        );
+        this.router.navigate(['/home']);
+      })
+      .catch((err) => {
+        this.toastService.show(
+          `Login failed: ${err.error || err.message}`,
+          'error'
+        );
+      })
+      .finally(() => this.isLoading.set(false));
   }
 }

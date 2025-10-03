@@ -1,10 +1,9 @@
-import { NgClass } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { TUserReadonly } from '../../../../models/users.model';
 
 @Component({
   selector: 'app-users-list-component',
-  imports: [NgClass],
+  imports: [],
   templateUrl: './users-list-component.html',
 })
 export class UsersListComponent {

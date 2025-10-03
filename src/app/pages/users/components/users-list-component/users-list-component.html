@@ -6,7 +6,6 @@
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Status</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -18,17 +17,6 @@
         <td>{{ user.email }}</td>
         <td>
           <span class="badge badge-outline badge-info">{{ user.role }}</span>
-        </td>
-        <td>
-          <span
-            class="badge"
-            [ngClass]="{
-              'badge-success': user.active,
-              'badge-error': !user.active
-            }"
-          >
-            {{ user.active ? "Active" : "Inactive" }}
-          </span>
         </td>
         <td>
           <!-- dropdown action buttons -->
