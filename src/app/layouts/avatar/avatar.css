@@ -1,0 +1,10 @@
+.avatar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-weight: 500;
+  color: #ffffff; /* Default text color, overridden by input */
+  user-select: none;
+  flex-shrink: 0; /* Prevents container from shrinking in flex layouts */
+}

@@ -5,68 +5,160 @@
     <div class="container flex mx-auto">
       <!-- Start: Brand & Mobile Menu -->
       <div class="navbar-start">
-        <div class="dropdown">
-          <button tabindex="0" class="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div class="drawer drawer-start w-auto lg:hidden">
+          <input id="nav-drawer" type="checkbox" class="drawer-toggle" />
+          <div class="drawer-content">
+            <!-- label/button that opens the drawer -->
+            <label
+              for="nav-drawer"
+              class="btn btn-ghost hover:bg-transparent hover:text-gray-700 hover:border-transparent hover:shadow-none transition-none"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-          <ul
-            tabindex="0"
-            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white text-indigo-600 rounded-box w-52"
-          >
-            <li>
-              <a
-                routerLink="/home"
-                class="hover:bg-indigo-500 hover:text-white"
-                routerLinkActive="bg-indigo-500 text-white"
-                >Home</a
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-            </li>
-            <li>
-              <a
-                routerLink="/products"
-                class="hover:bg-indigo-500 hover:text-white"
-                routerLinkActive="bg-indigo-500 text-white"
-                >Products</a
-              >
-            </li>
-            <li>
-              <a
-                routerLink="/users"
-                class="hover:bg-indigo-500 hover:text-white"
-                routerLinkActive="bg-indigo-500 text-white"
-                >Users</a
-              >
-            </li>
-            <li>
-              <a
-                routerLink="/about"
-                class="hover:bg-indigo-500 hover:text-white"
-                routerLinkActive="bg-indigo-500 text-white"
-                >About</a
-              >
-            </li>
-            <li>
-              <a
-                routerLink="/contact"
-                class="hover:bg-indigo-500 hover:text-white"
-                routerLinkActive="bg-indigo-500 text-white"
-                >Contact</a
-              >
-            </li>
-          </ul>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </label>
+          </div>
+          <div class="drawer-side">
+            <label for="nav-drawer" class="drawer-overlay"></label>
+
+            <div
+              class="menu p-6 h-screen min-w-[300px] bg-white text-indigo-600 shadow-lg flex flex-col"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <a class="text-2xl font-bold">Menu</a>
+                <!-- close button -->
+                <label
+                  for="nav-drawer"
+                  class="btn btn-ghost hover:bg-transparent hover:text-gray-700 hover:border-transparent hover:shadow-none transition-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </label>
+              </div>
+
+              <!-- User profile block (shows when user is logged in) -->
+              @if(authService.user()){
+              <div class="mb-4 flex items-center space-x-3">
+                <app-avatar
+                  [name]="
+                    authService.user()?.displayName ||
+                    authService.user()?.email!
+                  "
+                  shape="round"
+                />
+                <div>
+                  <div class="font-semibold text-base">
+                    {{
+                      authService.user()?.displayName ||
+                        authService.user()?.email
+                    }}
+                  </div>
+                  <a routerLink="/profile" class="text-sm text-indigo-500"
+                    >View profile</a
+                  >
+                </div>
+              </div>
+              }
+
+              <nav class="flex-1">
+                <ul class="space-y-4 text-lg">
+                  <li>
+                    <a
+                      routerLink="/home"
+                      class="block hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2"
+                      routerLinkActive="bg-indigo-500 text-white"
+                      >Home</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      routerLink="/products"
+                      class="block hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2"
+                      routerLinkActive="bg-indigo-500 text-white"
+                      >Products</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      routerLink="/users"
+                      class="block hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2"
+                      routerLinkActive="bg-indigo-500 text-white"
+                      >Users</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      routerLink="/about"
+                      class="block hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2"
+                      routerLinkActive="bg-indigo-500 text-white"
+                      >About</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      routerLink="/contact"
+                      class="block hover:bg-indigo-500 hover:text-white rounded-md px-3 py-2"
+                      routerLinkActive="bg-indigo-500 text-white"
+                      >Contact</a
+                    >
+                  </li>
+                </ul>
+              </nav>
+
+              <div class="mt-6">
+                <!-- conditional footer actions -->
+                @if(authService.user()) {
+                <ng-container>
+                  <div class="space-y-3">
+                    <a routerLink="/settings" class="btn btn-outline btn-block"
+                      >Settings</a
+                    >
+                    <button
+                      class="btn btn-primary btn-block"
+                      (click)="onLogout()"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </ng-container>
+                } @else {
+                <div class="space-y-3">
+                  <a
+                    routerLink="/carts"
+                    class="btn btn-outline btn-block text-indigo-600"
+                    >Cart</a
+                  >
+                  <a routerLink="/auth/login" class="btn btn-primary btn-block"
+                    >Login / Register</a
+                  >
+                </div>
+                }
+              </div>
+            </div>
+          </div>
         </div>
         <a class="text-xl font-bold cursor-default">NgStore</a>
       </div>
@@ -119,7 +211,7 @@
 
       <!-- End: CTA & Icons -->
       <div class="navbar-end space-x-4">
-        @if(authService.user() !== null){
+        @if(authService.user()){
         <!-- Cart Icon -->
         <div class="indicator">
           <span class="indicator-item badge badge-sm badge-error font-bold">{{
@@ -152,30 +244,31 @@
             tabindex="0"
             class="btn btn-sm btn-circle bg-white text-indigo-600 hover:bg-indigo-100"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-              />
-            </svg>
+            <app-avatar
+              [name]="
+                authService.user()?.displayName || authService.user()?.email!
+              "
+              shape="round"
+              [size]="32"
+            />
           </button>
           <ul
             tabindex="0"
             class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white text-indigo-600 rounded-box w-40"
           >
             <li>
-              <a class="hover:bg-indigo-500 hover:text-white">Profile</a>
+              <a
+                class="hover:bg-indigo-500 hover:text-white"
+                routerLink="/profile"
+                >Profile</a
+              >
             </li>
             <li>
-              <a class="hover:bg-indigo-500 hover:text-white">Settings</a>
+              <a
+                class="hover:bg-indigo-500 hover:text-white"
+                routerLink="/settings"
+                >Settings</a
+              >
             </li>
             <li>
               <a
@@ -186,7 +279,7 @@
             </li>
           </ul>
         </div>
-        }@else {
+        } @else {
         <button
           class="btn btn-sm bg-white text-indigo-600 hover:bg-indigo-100 font-semibold"
           (click)="onShopNow()"

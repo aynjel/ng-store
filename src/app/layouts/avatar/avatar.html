@@ -1,0 +1,12 @@
+<div
+  class="avatar-container"
+  [style.width.px]="size"
+  [style.height.px]="size"
+  [style.border-radius.px]="isRound() ? size : borderRadius"
+  [style.background-color]="backgroundColor()"
+  [style.font-size.px]="initialsFontSize()"
+>
+  <span class="avatar-initials" [style.color]="textColor">{{
+    initials()
+  }}</span>
+</div>
