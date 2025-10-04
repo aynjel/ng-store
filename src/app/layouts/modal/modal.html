@@ -1,0 +1,22 @@
+@if (visible) {
+<div class="modal-backdrop" (click)="onBackdropClick()"></div>
+
+<div class="modal-wrapper text-gray-700">
+  <div class="modal-card">
+    <header class="modal-header">
+      <h3 class="modal-title">{{ title }}</h3>
+      <button class="modal-close" aria-label="Close" (click)="close()">
+        &times;
+      </button>
+    </header>
+
+    <section class="modal-body">
+      <ng-content></ng-content>
+    </section>
+
+    <footer class="modal-footer">
+      <button class="btn btn-ghost btn-sm" (click)="close()">Close</button>
+    </footer>
+  </div>
+</div>
+}
