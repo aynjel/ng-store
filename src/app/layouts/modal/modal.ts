@@ -1,25 +1,40 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, input, output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
-  standalone: true,
+  imports: [],
   templateUrl: './modal.html',
-  styleUrls: ['./modal.css'],
 })
 export class Modal {
-  /** Controls modal visibility. Use two-way binding: [(visible)]="myVisible" */
-  @Input() visible = false;
-  @Output() visibleChange = new EventEmitter<boolean>();
+  @ViewChild('modal', { static: true })
+  private dialogRef!: ElementRef<HTMLDialogElement>;
 
-  /** Title is required for the modal header */
-  @Input({ required: true }) title!: string;
+  title = input.required<string>();
 
-  close() {
-    this.visible = false;
-    this.visibleChange.emit(false);
+  closeEmitter = output<string>();
+
+  open(): void {
+    const dialog = this.dialogRef?.nativeElement;
+    if (!dialog) return;
+    // Use showModal when available for modal behavior
+    if (typeof dialog.showModal === 'function') {
+      try {
+        dialog.showModal();
+      } catch (e) {
+        // If already open or error, fallback to show
+        if (typeof dialog.show === 'function') dialog.show();
+      }
+    } else if (typeof dialog.show === 'function') {
+      dialog.show();
+    }
   }
 
-  onBackdropClick() {
-    this.close();
+  close(): void {
+    const dialog = this.dialogRef.nativeElement;
+    if (!dialog) return;
+    if (typeof dialog.close === 'function') {
+      dialog.close();
+      this.closeEmitter.emit('closed');
+    }
   }
 }

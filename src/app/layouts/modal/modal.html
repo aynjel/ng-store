@@ -1,22 +1,29 @@
-@if (visible) {
-<div class="modal-backdrop" (click)="onBackdropClick()"></div>
-
-<div class="modal-wrapper text-gray-700">
-  <div class="modal-card">
-    <header class="modal-header">
-      <h3 class="modal-title">{{ title }}</h3>
-      <button class="modal-close" aria-label="Close" (click)="close()">
-        &times;
+<dialog #modal class="modal" role="dialog" aria-modal="true">
+  <div class="modal-box max-h-[80vh]" tabindex="-1">
+    <header class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-bold">{{ title() }}</h3>
+      <button
+        class="btn btn-ghost btn-sm btn-circle"
+        aria-label="Close"
+        (click)="close()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
       </button>
     </header>
 
-    <section class="modal-body">
-      <ng-content></ng-content>
-    </section>
-
-    <footer class="modal-footer">
-      <button class="btn btn-ghost btn-sm" (click)="close()">Close</button>
-    </footer>
+    <ng-content></ng-content>
   </div>
-</div>
-}
+</dialog>

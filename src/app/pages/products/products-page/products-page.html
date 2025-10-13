@@ -5,6 +5,11 @@
       Find the perfect item from our curated catalog
     </p>
   </div>
+  <div class="text-right mb-4">
+    <button class="btn btn-primary" (click)="onShowAddProductModal()">
+      Add Product
+    </button>
+  </div>
 
   @if(!error() && !isLoading() && products().length > 0) {
   <app-products-filter-component [(filters)]="filters" />
@@ -16,3 +21,127 @@
     [error]="error()"
   />
 </section>
+
+<!-- Modal for adding products -->
+<app-modal #modal title="Add Product">
+  <form [formGroup]="addProductForm" (ngSubmit)="onSubmitCreatedProduct()">
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productName"
+        >Product Namdasde</label
+      >
+      <input
+        id="productName"
+        formControlName="title"
+        type="text"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product name"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productPrice"
+        >Price</label
+      >
+      <input
+        id="productPrice"
+        formControlName="price"
+        type="number"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product price"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productDescription"
+        >Description</label
+      >
+      <textarea
+        id="productDescription"
+        formControlName="description"
+        rows="4"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product description"
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productImage"
+        >Image URL</label
+      >
+      <input
+        id="productImage"
+        formControlName="image"
+        type="text"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter image URL"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productCategory"
+        >Category</label
+      >
+      <input
+        id="productCategory"
+        formControlName="category"
+        type="text"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product category"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productCategory"
+        >Category</label
+      >
+      <input
+        id="productCategory"
+        formControlName="category"
+        type="text"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product category"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productCategory"
+        >Category</label
+      >
+      <input
+        id="productCategory"
+        formControlName="category"
+        type="text"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product category"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productCategory"
+        >Category</label
+      >
+      <input
+        id="productCategory"
+        formControlName="category"
+        type="text"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product category"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1" for="productCategory"
+        >Category</label
+      >
+      <input
+        id="productCategory"
+        formControlName="category"
+        type="text"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        placeholder="Enter product category"
+      />
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="submit">
+        @if (isLoading()) {
+        <span class="loading loading-spinner"></span> <span>Adding...</span>
+        } @else {
+        <span>Add Product</span>
+        }
+      </button>
+    </div>
+  </form>
+</app-modal>
